@@ -12,3 +12,5 @@ https://github.com/abacaj/mpt-30B-inference  ->  git clone
 pip install -r requirements.txt
 
 Скачиваем модель: https://huggingface.co/TheBloke/mpt-30B-chat-GGML
+
+python inference.py
