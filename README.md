@@ -1,6 +1,12 @@
 # mpt30
 Test for mpt30
 
+Запуск в Docker:
+
+docker build -t mpt .
+docker run -dit --name mtp-container -p 221:22 --gpus all --restart unless-stopped mtp:latest
+docker container attach mpt
+
 
 Youtube: https://www.youtube.com/watch?v=Ii3m8P3pp1c
 
