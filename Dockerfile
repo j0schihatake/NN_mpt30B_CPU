@@ -38,7 +38,7 @@ RUN echo 'llama-cpp-user:admin' | chpasswd
 #RUN conda update conda -y
 
 # Create virtalenv
-RUN conda create -n llamacpp -y python=3.10.6
+RUN conda create -n mpt -y python=3.10.6
 
 # Adding ownership of /opt/conda to $user
 RUN chown -R llama-cpp-user:users /opt/conda
@@ -46,28 +46,20 @@ RUN chown -R llama-cpp-user:users /opt/conda
 # conda init bash for $user
 RUN su - llama-cpp-user -c "conda init bash"
 
-# Download latest github/llama-cpp in llama.cpp directory and compile it
-#RUN su - llama-cpp-user -c "git clone https://github.com/ggerganov/llama.cpp.git ~/llama.cpp \
-#                            && cd ~/llama.cpp \
-#                            && make "
+# Download latest github
+RUN su - llama-cpp-user -c "git clone https://github.com/abacaj/mpt-30B-inference.git ~/mpt \
+                            && cd ~/mpt"
 
 # Install Requirements for python virtualenv
-#RUN su - llama-cpp-user -c "cd ~/llama.cpp \
-#                            && conda activate llamacpp \
-#                            && python3 -m pip install -r requirements.txt "
+RUN su - llama-cpp-user -c "cd ~/mpt \
+                            && conda activate \
+                            && python3 -m pip install -r requirements.txt "
 
-# Download model
-# RUN su - llama-cpp-user -c "https://github.com/facebookresearch/llama.git ~/llama \
-#                            && cd ~/llama \
-#                            && ./download.sh "
-#COPY ./model/ggml-gpt4-x-vicuna-13b-q5_1.bin /
+ENV HOME /home/llama-cpp-user
 
-# COPY entrypoint.sh /usr/bin/entrypoint
-# RUN chmod 755 /usr/bin/entrypoint
-# ENTRYPOINT ["/usr/bin/entrypoint"]
+COPY ./models/mpt-30b-chat.ggmlv0.q4_1.bin ${HOME}/mpt/models/
 
 # Preparing for login
-ENV HOME /home/llama-cpp-user
-WORKDIR ${HOME}/mtp
+WORKDIR ${HOME}
 USER llama-cpp-user
 CMD ["/bin/bash"]

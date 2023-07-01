@@ -17,6 +17,8 @@ conda activate mpt30
 https://github.com/abacaj/mpt-30B-inference  ->  git clone
 pip install -r requirements.txt
 
-Скачиваем модель: https://huggingface.co/TheBloke/mpt-30B-chat-GGML
+Скачиваем модель: https://huggingface.co/TheBloke/mpt-30B-chat-GGML 
+Размещаем в models
+Далее в dockerfile правим строчку 62.
 
 python inference.py
